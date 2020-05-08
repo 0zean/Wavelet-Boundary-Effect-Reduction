@@ -3,7 +3,8 @@ library(ggplot2)
 library(quantmod)
 library(plotly)
 library(earth)
-setwd("C:/Users/Nick/Desktop/Market")
+
+setwd("path/to/csv")
 set.seed(123)
 
 esdf <- read.csv("emini.csv")
