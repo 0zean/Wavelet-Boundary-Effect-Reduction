@@ -1,6 +1,6 @@
 # Wavelet Boundary Effect Reduction
 
-A method for eliminating boundary effects from wavelet denoising to be used as a possible filter for trading. Inspired by [The End Point Fast Fourier Transform](https://meyersanalytics.com/publications2/sp5epfft.pdf)
+A method for eliminating boundary effects from wavelet denoising to be used as a possible filter for trading, inspired by [The End Point Fast Fourier Transform](https://meyersanalytics.com/publications2/sp5epfft.pdf).
 
 Often times in financial literature wavelet transforms are used misleadingly for forecasting. The same is true for other decomposition methods like EMD and FFT. Wavelets and FFT, for instance, assume the signal is periodic for the given sample and that the signal starts and ends at 0. This is clearly false for financial time-series and methods like reflecting the boundary, zero padding, mean padding, etc do not reduce the severe deformities in boundary coefficients caused by these assumptions. Certain wavelet filters such as symlets and daubechies look ahead in the signal to produce coefficients at a given time t making the decomposition even more misleading. 
 
