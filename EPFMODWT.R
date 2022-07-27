@@ -30,18 +30,17 @@ ts.plot(as.ts(flat))
 
 
 # sliding window wavelet denoise saving last 2 coeffs from each window
-# ep is last coeff epk is second to last
 slideFunct <- function(data, window, step){
   total <- length(data)
   spots <- seq(from=1, to=(total-window), by=step)
-  ep <- vector(length = total-window)
-  epk <- vector(length = total-window)
+  ep <- vector(length = total-window) # ep is last coeff
+  epk <- vector(length = total-window) # epk is second to last coeff
   
   for(i in 1:length(spots)){
     newdata <- data[spots[i]:(spots[i]+window)]
     ff <- EPF(newdata)
     wave <- wavShrink(ff, wavelet="s8", n.level=3, shrink.fun="soft", 
-                      thresh.fun="universal", xform="modwt", reflect=FALSE)
+                      thresh.fun="universal", xform="modwt", reflect=FALSE) # Wavelet shrinkage to obtain a single smoothed signal
     filt <- as.ts(wave)
     ep[i] <- filt[length(filt)]
     epk[i] <- filt[length(filt)-1]
