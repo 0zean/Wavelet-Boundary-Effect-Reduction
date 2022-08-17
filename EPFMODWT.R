@@ -5,7 +5,7 @@ library(plotly)
 library(earth)
 
 setwd("path/to/csv")
-set.seed(123)
+set.seed(3)
 
 esdf <- read.csv("emini.csv")
 es <- esdf["Close"]
