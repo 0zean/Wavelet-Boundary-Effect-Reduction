@@ -1,4 +1,5 @@
 library(wmtsa)
+library(smooth)
 library(ggplot2)
 library(quantmod)
 library(plotly)
@@ -13,7 +14,6 @@ set.seed(42)
 key <- readLines("key.txt") # read api key from text file
 av_api_key(key)
 data <- av_get("AAPL", av_fun = "TIME_SERIES_INTRADAY", interval = "5min", outputsize = 'full')
-
 
 #signal = as.ts(log(es))
 signal = rev(data$close)
@@ -32,6 +32,7 @@ EPF <- function(data) {
 }
 
 
+# plot of EPF on close price
 signal <- as.ts(rev(data$close))
 flat <- EPF(signal)
 ts.plot(as.ts(flat))
@@ -82,17 +83,17 @@ for(i in 1:length(pre)){
   vect[i] <- pre[i] + vect[length(vect)]
 }
 
-library(smooth)
+# 14 period MA of the filter
 ma <-  SMA(vect, n=14)
-
 
 price <- signal[(length(signal)-200):length(signal)]
 epf_filter <- vect[(length(vect)-200):length(vect)]
 
+
+# Ploting the filter and original Price series separately 
 par(mfrow=c(2,1)) 
 plot.ts(price)
 plot.ts(epf_filter)
-
 
 data2 <- data.frame(
   day = seq(length(price)),
@@ -101,8 +102,8 @@ data2 <- data.frame(
 )
 
 
+# Ploting the filter against the original Price series
 range01 <- function(x){(x-min(x))/(max(x)-min(x))}
-
 
 ggplot(data2, aes(x=day)) +
   geom_line( aes(y=range01(value1))) + 
@@ -112,6 +113,7 @@ ggplot(data2, aes(x=day)) +
   )
 
 
+# Plottig the filter with its 14 period MA
 data3 <- data.frame(
   day = seq(201),
   value1 = vect[(length(vect)-200):length(vect)],
