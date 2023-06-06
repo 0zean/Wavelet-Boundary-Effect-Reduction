@@ -2,14 +2,15 @@ library(wmtsa)
 library(ggplot2)
 library(quantmod)
 library(plotly)
-library(earth)
 
-setwd("path/to/csv")
-set.seed(3)
+setwd("Wavelet-Boundary-Effect-Reduction/")
+set.seed(42)
 
+# Read csv and keep only the close price
 esdf <- read.csv("emini.csv")
 es <- esdf["Close"]
 
+# Log transform to reduce exponential trends
 signal = as.ts(log(es))
 ts.plot(signal)
 
